@@ -194,14 +194,13 @@ export default function ActionScreen() {
       // Wait for the item to settle
       setTimeout(() => {
         const h = sceneRef.current?.clientHeight || 600;
-        const target = tankPosRef.current;
-        const mouthHalfWidth = 72;
-        const mouthTop = target.y + 10;
-        const mouthBottom = target.y + 55;
+        const tank = tankPosRef.current;
+        const tankW = 260;
+        const tankH = 160;
 
-        // STRICT SUCCESS CHECK: Must be within the mouth target area
-        const isWithinX = Math.abs(newItem.position.x - target.x) < mouthHalfWidth;
-        const isWithinY = newItem.position.y > mouthTop && newItem.position.y < mouthBottom;
+        // STRICT SUCCESS CHECK: Must be within tank bounds (X and Y)
+        const isWithinX = Math.abs(newItem.position.x - tank.x) < (tankW / 2 - 20);
+        const isWithinY = newItem.position.y > (tank.y - tankH / 2) && newItem.position.y < (tank.y + tankH / 2 + 10);
 
         const isSuccess = isWithinX && isWithinY;
 
