@@ -334,19 +334,11 @@ export default function ActionScreen() {
         className="absolute bottom-[40px] w-[300px] h-[200px] z-10 pointer-events-none transition-all duration-75 ease-linear"
         style={{ left: tankPosRef.current.x, transform: 'translateX(-50%)' }}
       >
-        <img
-          src="/image.png"
-          alt="おじさんの口"
-          className="w-full h-full object-contain rounded-3xl shadow-[0_0_45px_rgba(16,185,129,0.2)]"
-        />
-        <div className="absolute left-1/2 top-[55%] w-[160px] h-[42px] -translate-x-1/2 rounded-2xl border-2 border-emerald-400/60 bg-emerald-500/10 shadow-[0_0_30px_rgba(52,211,153,0.2)] pointer-events-none" />
-        <motion.div
-          animate={{ opacity: [0.35, 0.7, 0.35], scale: [1, 1.03, 1] }}
-          transition={{ duration: 2.8, repeat: Infinity }}
-          className="absolute left-1/2 top-[55%] w-[180px] h-[46px] -translate-x-1/2 rounded-2xl bg-emerald-500/10 blur-sm"
-        />
+        <div className="absolute inset-0 border-[4px] border-emerald-500/30 bg-emerald-500/5 backdrop-blur-[1px] rounded-b-2xl shadow-[inset_0_0_30px_rgba(16,185,129,0.1)]" />
+        <div className="absolute inset-x-0 top-0 h-1 bg-emerald-400/50 shadow-[0_0_15px_rgba(52,211,153,0.5)]" />
+        <motion.div animate={{ height: ["60%", "65%", "60%"] }} transition={{ duration: 3, repeat: Infinity }} className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-emerald-500/20 to-transparent opacity-40" />
         <div className="absolute -bottom-6 left-1/2 -translate-x-1/2 text-emerald-500/60 font-mono text-[10px] tracking-[0.3em] uppercase">
-          Unit-01: Genetic Mouth
+          Unit-01: Genetic Tank
         </div>
       </div>
 
@@ -360,11 +352,11 @@ export default function ActionScreen() {
           <p className="text-emerald-50 text-xs font-black tracking-[0.08em] uppercase italic flex items-center gap-2">
             <Zap className="h-3 w-3 text-emerald-400 fill-emerald-400 shrink-0" />
             {gameState === 'SELECTING_1' && "1. 足になるパーツをお選びください[SPACE]"}
-            {gameState === 'DROPPING_1' && "おじさんの口を狙って落としてください[SPACE]"}
+            {gameState === 'DROPPING_1' && "水槽を狙って落としてください[SPACE]"}
             {gameState === 'SELECTING_2' && "2. 体になるパーツをお選びください[SPACE]"}
-            {gameState === 'DROPPING_2' && "タイミングを合わせて口へ落としてください[SPACE]"}
+            {gameState === 'DROPPING_2' && "タイミングを合わせて落としてください[SPACE]"}
             {gameState === 'SELECTING_3' && "3. 頭になるパーツをお選びください[SPACE]"}
-            {gameState === 'DROPPING_3' && "最後です！おじさんの口へ落としてください[SPACE]"}
+            {gameState === 'DROPPING_3' && "最後です！水槽へ落としてください[SPACE]"}
             {gameState === 'FINISHED' && "分析中..."}
             <Zap className="h-3 w-3 text-emerald-400 fill-emerald-400 shrink-0" />
           </p>
