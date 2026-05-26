@@ -20,6 +20,8 @@ const RARITY_STYLES: Record<string, string> = {
 
 type SortMode = "score_desc" | "score_asc" | "newest";
 
+const PAGE_SIZE = 10;
+
 function RankingContent() {
   const router = useRouter();
   const [allData, setAllData] = useState<any[]>([]);
@@ -29,6 +31,7 @@ function RankingContent() {
   const [selectedRarities, setSelectedRarities] = useState<Set<string>>(new Set());
   const [nameQuery, setNameQuery] = useState("");
   const [sortMode, setSortMode] = useState<SortMode>("score_desc");
+  const [visibleCount, setVisibleCount] = useState(PAGE_SIZE);
 
   // 全件取得（フィルタリングはクライアント側）
   useEffect(() => {
@@ -82,6 +85,14 @@ function RankingContent() {
   }, [allData, selectedRarities, nameQuery, sortMode]);
 
   const hasFilter = selectedRarities.size > 0 || nameQuery.trim();
+
+  // フィルター/ソート変更時に表示件数をリセット
+  useEffect(() => {
+    setVisibleCount(PAGE_SIZE);
+  }, [filtered]);
+
+  const visibleItems = filtered.slice(0, visibleCount);
+  const hasMore = visibleCount < filtered.length;
 
   return (
     <div className="max-w-3xl mx-auto space-y-6 pb-12">
@@ -171,7 +182,7 @@ function RankingContent() {
 
         {/* ヒット件数 */}
         <div className="text-[10px] text-slate-600 font-mono text-right">
-          {isLoading ? "読み込み中..." : `${filtered.length} 件 / 全 ${allData.length} 件`}
+          {isLoading ? "読み込み中..." : `表示: ${Math.min(visibleCount, filtered.length)} / ${filtered.length} 件（全 ${allData.length} 件）`}
         </div>
       </div>
 
@@ -184,7 +195,7 @@ function RankingContent() {
       ) : (
         <AnimatePresence mode="popLayout">
           <div className="grid gap-4">
-            {filtered.map((item, i) => (
+            {visibleItems.map((item, i) => (
               <motion.div
                 key={item.id}
                 layout
@@ -255,6 +266,22 @@ function RankingContent() {
                 </div>
               </motion.div>
             ))}
+
+            {hasMore && (
+              <motion.div
+                key="load-more"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                className="flex flex-col items-center gap-1 pt-2"
+              >
+                <button
+                  onClick={() => setVisibleCount(c => c + PAGE_SIZE)}
+                  className="px-8 py-3 rounded-xl bg-slate-900 border border-emerald-500/30 text-emerald-400 font-black text-sm hover:bg-slate-800 hover:border-emerald-500/60 transition-all"
+                >
+                  さらに表示（残り {filtered.length - visibleCount} 件）
+                </button>
+              </motion.div>
+            )}
 
             {filtered.length === 0 && !isLoading && (
               <motion.div
