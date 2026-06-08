@@ -1,6 +1,3 @@
-import { GoogleGenerativeAI } from "@google/generative-ai";
+import Groq from "groq-sdk";
 
-const apiKey = process.env.GEMINI_API_KEY || "";
-const genAI = new GoogleGenerativeAI(apiKey);
-
-export const model = genAI.getGenerativeModel({ model: "gemini-flash-latest" });
+export const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });

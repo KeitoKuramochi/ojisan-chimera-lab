@@ -1,6 +1,6 @@
 "use server";
 
-import { model } from "@/lib/gemini";
+import { groq } from "@/lib/gemini";
 import { supabase } from "@/lib/supabase";
 
 export async function saveChimera(data: {
@@ -28,8 +28,8 @@ export async function evaluateChimera(parts: any[], mutationLevel: number) {
   console.log("--- Chimera Evaluation Started ---");
   console.log(`Input Parts: Head:${head}, Body:${body}, Legs:${legs}`);
 
-  if (!process.env.GEMINI_API_KEY) {
-    console.error("CRITICAL ERROR: GEMINI_API_KEY is not set in environment variables.");
+  if (!process.env.GROQ_API_KEY) {
+    console.error("CRITICAL ERROR: GROQ_API_KEY is not set in environment variables.");
   }
 
   // デフォルトパーツかどうかを判定
@@ -100,9 +100,12 @@ export async function evaluateChimera(parts: any[], mutationLevel: number) {
   while (attempts < maxAttempts) {
     try {
       attempts++;
-      const result = await model.generateContent(prompt);
-      const response = await result.response;
-      const text = response.text();
+      const result = await groq.chat.completions.create({
+        model: "llama-3.3-70b-versatile",
+        messages: [{ role: "user", content: prompt }],
+        temperature: 0.9,
+      });
+      const text = result.choices[0]?.message?.content || "";
       console.log(`AI Raw Response (Attempt ${attempts}):`, text);
 
       const jsonMatch = text.match(/\{[\s\S]*\}/);
