@@ -44,19 +44,19 @@ export default function ResultScreen() {
 
       setEvaluation(result);
 
-      // Save to Supabase
-      setIsSaving(true);
-      const doctorName = localStorage.getItem("chimera_doctor_name") || "不明な博士";
-      await saveChimera({
-        doctor_name: doctorName,
-        score: result.score,
-        rarity: result.rarity,
-        species_name: result.species_name,
-        scientific_name: result.scientific_name,
-        description: result.description,
-        parts: savedParts
-      });
-      setIsSaving(false);
+      // ランキング保存は一時無効化中
+      // setIsSaving(true);
+      // const doctorName = localStorage.getItem("chimera_doctor_name") || "不明な博士";
+      // await saveChimera({
+      //   doctor_name: doctorName,
+      //   score: result.score,
+      //   rarity: result.rarity,
+      //   species_name: result.species_name,
+      //   scientific_name: result.scientific_name,
+      //   description: result.description,
+      //   parts: savedParts
+      // });
+      // setIsSaving(false);
 
       // Immediately show if precomputed, or wait briefly if not
       setShowResult(true);
@@ -234,15 +234,16 @@ export default function ResultScreen() {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.8 }}
-        className="grid grid-cols-2 gap-4"
+        className="grid grid-cols-1 gap-4"
       >
-        <button
+        {/* ランキングボタンは一時無効化中 */}
+        {/* <button
           onClick={() => router.push("/ranking")}
           className="group relative flex items-center justify-center gap-2 py-4 bg-emerald-600 rounded-xl font-black text-xl text-white overflow-hidden transition-all hover:bg-emerald-500 shadow-[0_0_30px_rgba(16,185,129,0.3)]"
         >
           <Trophy className="h-6 w-6" />
           図鑑を確認する
-        </button>
+        </button> */}
         <button
           onClick={() => router.push("/")}
           className="flex items-center justify-center gap-2 py-4 bg-slate-900 border border-emerald-500/20 rounded-xl font-black text-xl text-emerald-400 transition-all hover:bg-slate-800"

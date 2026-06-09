@@ -130,13 +130,14 @@ export default function TitleScreen() {
           <BookOpen className="h-5 w-5 text-emerald-400" />
           あそびかた
         </button>
-        <button
+        {/* ランキング機能は一時無効化中 */}
+        {/* <button
           onClick={() => router.push("/ranking")}
           className="flex items-center gap-2 rounded-lg bg-emerald-950/20 border border-emerald-500/10 px-6 py-3 text-emerald-400/80 transition-all hover:bg-emerald-900/30 hover:border-emerald-500/30"
         >
           <Trophy className="h-5 w-5 text-amber-500" />
           最高傑作図鑑
-        </button>
+        </button> */}
       </motion.div>
 
       {/* ===== TUTORIAL MODAL ===== */}
